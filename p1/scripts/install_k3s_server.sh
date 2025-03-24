@@ -51,7 +51,6 @@ token: "$TOKEN"
 flannel-iface: "eth1"
 EOF
 
-
 echo 'alias k="kubectl"' | sudo tee /etc/profile.d/kubectl_alias.sh > /dev/null
 sudo chmod +x /etc/profile.d/kubectl_alias.sh
 
