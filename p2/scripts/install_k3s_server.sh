@@ -29,3 +29,10 @@ sudo chmod +x /etc/profile.d/kubectl_alias.sh
 
 cp /var/lib/rancher/k3s/server/node-token /vagrant/token
 
+kubectl create configmap app1-html --from-file=/vagrant/confs/app1/index.html
+kubectl apply -f /vagrant/confs/app1/service.yaml
+kubectl apply -f /vagrant/confs/app1/deployment.yaml
+
+
+kubectl apply -f /vagrant/confs/ingress.yaml
+
