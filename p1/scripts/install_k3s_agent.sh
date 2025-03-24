@@ -48,7 +48,9 @@ cat $CONFIG_DST
 echo "Configuration copiée avec succès ! Installation de K3s agent..."
 
 # Installation de K3s agent
-curl -sfL https://get.k3s.io/ | INSTALL_K3S_EXEC="agent --config /etc/rancher/k3s/config.yaml" sh -
+export INSTALL_K3S_EXEC="agent --config /etc/rancher/k3s/config.yaml"
+
+curl -sfL https://get.k3s.io/ | sh -
 
 
 echo 'alias k="kubectl"' | sudo tee /etc/profile.d/kubectl_alias.sh > /dev/null

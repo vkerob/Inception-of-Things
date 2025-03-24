@@ -19,13 +19,17 @@ echo "Copie de la configuration du serveur K3s..."
 sudo cp "$CONFIG_SRC" "$CONFIG_DST"
 sudo chmod 644 "$CONFIG_DST"
 
-echo "Fichier de configuration copié avec succès ! Installation du serveur K3s..."
+echo "Installation du serveur K3s..."
 
 # Installation du serveur K3s
-curl -sfL https://get.k3s.io/ | sudo INSTALL_K3S_EXEC="server --config /etc/rancher/k3s/config.yaml" sh -
+export K3S_KUBECONFIG_MODE="644"
+export INSTALL_K3S_EXEC="server --config /etc/rancher/k3s/config.yaml"
 
-echo "Attente de la génération du token..."
+curl -sfL https://get.k3s.io/ | sh -
+
+
 # Vérifier que le fichier `node-token` est bien généré avant de continuer
+echo "Attente de la génération du token..."
 TIMEOUT=30
 while [ ! -f "/var/lib/rancher/k3s/server/node-token" ]; do
     sleep 1
@@ -47,8 +51,6 @@ token: "$TOKEN"
 flannel-iface: "eth1"
 EOF
 
-
-sudo chmod 644 /etc/rancher/k3s/k3s.yaml
 
 echo 'alias k="kubectl"' | sudo tee /etc/profile.d/kubectl_alias.sh > /dev/null
 sudo chmod +x /etc/profile.d/kubectl_alias.sh
