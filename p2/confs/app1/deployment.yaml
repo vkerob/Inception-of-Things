@@ -13,7 +13,7 @@ spec:
         app: app1
     spec:
       containers:
-        - name: app1
+        - name: nginx
           image: nginx:latest
           resources:
             limits:
@@ -22,5 +22,13 @@ spec:
             requests:
               memory: "64Mi"
               cpu: "250m"
-          ports:
-            - containerPort: 80
+          volumeMounts:
+            - name: app1-html
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+      volumes:
+        - name: app1-html
+          configMap:
+            name: app1-html
+
+
