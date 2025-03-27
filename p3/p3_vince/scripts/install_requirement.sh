@@ -12,7 +12,8 @@ function is_installed() {
 # === Docker ===
 if is_installed docker; then
     echo "Docker est déjà installé"
- "Installation de Docker..."
+ else 
+    echo "Installation de Docker..."
 
     sudo apt update
     sudo apt install -y ca-certificates curl gnupg lsb-release apt-transport-https
