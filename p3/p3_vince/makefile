@@ -39,7 +39,7 @@ argocd:
 		echo "Le serveur argocd est déjà en cours d'exécution"; \
 	else \
 		echo "Création du namespace argocd..."; \
-		kubectl apply -f ./confs/argocd/namespace.yaml; \
+		kubectl apply -f ./confs/namespace.yaml; \
 		echo "Installation d'argocd..."; \
 		kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml; \
 	fi
