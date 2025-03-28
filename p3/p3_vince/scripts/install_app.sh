@@ -44,8 +44,24 @@ echo "Mot de passe :"
 kubectl -n $ARGOCD_NAMESPACE get secret argocd-initial-admin-secret \
     -o jsonpath="{.data.password}" | base64 -d; echo
 
+# Récupération du mot de passe Argo CD
+ARGOCD_PASSWORD=$(kubectl -n $ARGOCD_NAMESPACE get secret argocd-initial-admin-secret \
+    -o jsonpath="{.data.password}" | base64 -d)
+
+
+# Port forwarding sur http://localhost:8080...
 echo "Port forwarding sur http://localhost:8080..."
-kubectl port-forward svc/argocd-server -n $ARGOCD_NAMESPACE 8888:80 >/dev/null 2>&1 &
+kubectl port-forward svc/argocd-server -n $ARGOCD_NAMESPACE 8080:80 >/dev/null 2>&1 &
+
+# Attendre que le port 8080 soit disponible
+until curl -s http://localhost:8080 > /dev/null; do
+  sleep 1
+done
+
+
+# Connexion CLI à Argo CD
+echo "Connexion à Argo CD via CLI..."
+argocd login localhost:8080 --username admin --password "$ARGOCD_PASSWORD" --insecure
 
 
 echo ""
