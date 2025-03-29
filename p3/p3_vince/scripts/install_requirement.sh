@@ -61,13 +61,3 @@ if ! is_installed kubectl; then
 else
     echo "kubectl est déjà installé"
 fi
-
-# === argocd (facultatif, mais utile pour la suite) ===
-if is_installed argocd; then
-    echo "argocd CLI est déjà installé"
-else
-    echo "Installation de l'outil en ligne de commande Argo CD..."
-    curl -sSL -o argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
-    chmod +x argocd
-    sudo mv argocd /usr/local/bin/
-fi
