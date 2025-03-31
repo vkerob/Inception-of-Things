@@ -1,0 +1,18 @@
+global:
+  edition: ce
+  hosts:
+    domain: localhost
+    externalIP: 127.0.0.1
+  ingress:
+    configureCertmanager: false
+    class: nginx
+    tls:
+      enabled: false
+  appConfig:
+    force_https: false 
+
+certmanager:
+  install: false
+
+nginx-ingress:
+  enabled: true
