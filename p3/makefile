@@ -61,7 +61,7 @@ open_port:
 		sleep 5; \
 	done
 	@echo "svc-wil est prêt !"
-	kubectl port-forward svc/svc-wil 8888:8080 -n $(DEV_NAMESPACE)
+	kubectl port-forward svc/svc-wil -n $(DEV_NAMESPACE) 8888:8080 >/dev/null 2>&1 & 
 
 .PHONY: show_id
 show_id:

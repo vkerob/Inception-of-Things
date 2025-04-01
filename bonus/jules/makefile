@@ -4,6 +4,7 @@ K3D_CMD = k3d
 CLUSTER_NAME = clusterk3d
 URL_ARGOCD = https://localhost:8080/
 DEV_NAMESPACE = dev
+GITLAB_NAMESPACE = gitlab
 
 .PHONY: help
 help:
@@ -36,6 +37,7 @@ k3d:
 	@echo "Création des namespaces sur le cluster k3d.."
 	kubectl apply -f ./confs/argocd/namespace.yaml
 	kubectl apply -f ./confs/dev/namespace.yaml
+	kubectl apply -f ./confs/gitlab/namespace.yaml
 
 .PHONY: argocd
 argocd:
@@ -80,6 +82,14 @@ dev:
 	@echo "Lancement de l app dev"
 	kubectl apply -n $(ARGOCD_NAMESPACE) -f ./confs/argocd/argocd-app.yaml
 
+.PHONY: gitlab
+gitlab:
+	@echo "Lancement de l app gitlab"
+	kubectl apply -n $(GITLAB_NAMESPACE) -f ./confs/gitlab/volume.yaml
+	kubectl apply -n $(GITLAB_NAMESPACE) -f ./confs/gitlab/deployment.yaml
+	kubectl apply -n $(GITLAB_NAMESPACE) -f ./confs/gitlab/service.yaml
+
+
 
 .PHONY: clean
 clean: 
@@ -90,7 +100,7 @@ clean:
 
 
 .PHONY: all
-all: requirements k3d argocd dev open_port show_id 
+all: requirements k3d argocd gitlab dev  open_port show_id 
 
 
 .PHONY: re
