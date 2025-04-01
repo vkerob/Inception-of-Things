@@ -49,15 +49,12 @@ The bridge is now initialized. To connect, use the username and local IP:
 ssh vboxuser@ip
 ```
 
+## Clone project
+```sh
+git clone git@github.com:vkerob/Inception-of-Things.git
+cd Inception-of-Things/
+```
 
-
-
-
-
-
-
-<!-- ![]()  pour mettre une image
--->
 
 ## 👨‍🎓 Contributors
 
