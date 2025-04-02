@@ -16,16 +16,13 @@ kubectl create configmap app1-html --from-file=/vagrant/confs/app1/index.html
 kubectl apply -f /vagrant/confs/app1/service.yaml
 kubectl apply -f /vagrant/confs/app1/deployment.yaml
 
-
 kubectl apply -f /vagrant/confs/ingress.yaml
-
 
 echo "Déploiement de app2 via kubectl..."
 
 kubectl create configmap app2-html --from-file=/vagrant/confs/app2/index.html
 kubectl apply -f /vagrant/confs/app2/service.yaml
 kubectl apply -f /vagrant/confs/app2/deployment.yaml
-
 
 kubectl apply -f /vagrant/confs/ingress.yaml
 
@@ -34,6 +31,5 @@ echo "Déploiement de app3 via kubectl..."
 kubectl create configmap app3-html --from-file=/vagrant/confs/app3/index.html
 kubectl apply -f /vagrant/confs/app3/service.yaml
 kubectl apply -f /vagrant/confs/app3/deployment.yaml
-
 
 kubectl apply -f /vagrant/confs/ingress.yaml
