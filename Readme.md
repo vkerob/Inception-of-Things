@@ -44,12 +44,35 @@ sudo ufw enable
 ip a
 ```
 
-The bridge is now initialized. To connect, use the username and local IP:
+The bridge is now initialized. To connect, use the username and local IP :
 ```sh
 ssh vboxuser@ip
 ```
 
-## Clone project
+Install packages :
+```sh
+sudo apt install -y \
+	git \
+	vim \
+	zsh \
+	curl \
+	wget
+	
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor --batch --yes -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update -y && sudo apt install -y vagrant
+
+sudo apt install -y virtualbox
+sudo usermod -aG docker vboxuser
+sudo usermod -aG sudo vboxuser
+
+wget https://download.virtualbox.org/virtualbox/7.1.6/virtualbox-7.1_7.1.6-167084\~Ubuntu\~noble_amd64.deb
+sudo dpkg -i virtualbox-7.1_7.1.6-167084\~Ubuntu\~noble_amd64.deb
+```
+
+## 🛰️ Clone project
 ```sh
 git clone git@github.com:vkerob/Inception-of-Things.git
 cd Inception-of-Things/
