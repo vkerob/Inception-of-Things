@@ -1,18 +1,32 @@
 global:
-  edition: ce
-  hosts:
-    domain: localhost
-    externalIP: 127.0.0.1
   ingress:
     configureCertmanager: false
-    class: nginx
-    tls:
+    enabled: false
+  hosts:
+    domain: gitlab.local
+
+gitlab:
+  webservice:
+    ingress:
       enabled: false
-  appConfig:
-    force_https: false 
+  toolbox:
+    ingress:
+      enabled: false
+  sidekiq:
+    ingress:
+      enabled: false
+  kas:
+    ingress:
+      enabled: false
+  gitlab-shell:
+    ingress:
+      enabled: false
+  grafana:
+    ingress:
+      enabled: false
+
+nginx-ingress:
+  enabled: false
 
 certmanager:
   install: false
-
-nginx-ingress:
-  enabled: true
