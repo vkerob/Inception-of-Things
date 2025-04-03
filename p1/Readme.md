@@ -26,8 +26,8 @@ In this part, we need to set up two virtual machines using **Vagrant**. These ma
 
 	- On ServerWorker, install K3s in **agent mode**. (`CONFIG_SRC="/vagrant/confs/config-agent.yaml"`)  
 
+![virtualbox](/images/p1_virtualbox.png)  
 > Expected virtual machines
-> ![virtualbox](/images/p1_virtualbox.png)
 
 ## ⚡ K3s modes
 

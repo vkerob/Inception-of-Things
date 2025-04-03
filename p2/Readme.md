@@ -17,8 +17,8 @@ In this part, you'll deploy **3 web applications** on a single VM running **K3s 
 - **Replicas** management
 - **K3s** orchestration
 
+![apps images](../images/p2_app.png)
 > Expected result after configuration  
-> ![apps images](../images/p2_app.png)
 
 > **Replicas** in Kubernetes are copies of a pod. They ensure the **scaling** of applications by creating **multiple instances** of the same pod based on traffic needs. If a pod fails, Kubernetes automatically creates a new pod to maintain the specified number of replicas.
 
