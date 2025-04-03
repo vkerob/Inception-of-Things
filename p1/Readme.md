@@ -25,9 +25,32 @@ In this part, we need to set up two virtual machines using **Vagrant**. These ma
 	- On Server, install K3s in **controller mode**. (`CONFIG_SRC="/vagrant/confs/config-server.yaml"`)
 
 	- On ServerWorker, install K3s in **agent mode**. (`CONFIG_SRC="/vagrant/confs/config-agent.yaml"`)  
-	
+
 > Expected virtual machines
-![virtualbox](/images/p1_virtualbox.png)
+> ![virtualbox](/images/p1_virtualbox.png)
+
+## ⚡ K3s modes
+
+- **Server Mode (Controller Mode)**  
+	>  Manages the API, schedules pods, stores data.  
+  Works alone or with multiple servers.  
+
+- **Agent Mode (Worker Mode)**  
+	>  Runs workloads (containers).  
+  Follows server instructions (assigned tasks, retrieves configurations).  
+
+- **Embedded Mode**  
+	>  K3s runs standalone, without a central server.  
+  Ideal for local testing.  
+
+- **HA Mode (High Availability)**  
+	>  Multiple servers for fault tolerance.  
+  Requires an external data store (MySQL, PostgreSQL, etcd).  
+
+- **Air-Gap Mode**  
+	>  Installation without Internet.  
+  Pre-downloaded dependencies.  
+
 
 ## ⌨️ Usefull command
 

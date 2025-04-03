@@ -17,23 +17,23 @@ In this part, you'll deploy **3 web applications** on a single VM running **K3s 
 - **Replicas** management
 - **K3s** orchestration
 
-> Expected result after configuration
-![apps images](../images/p2_app.png)
+> Expected result after configuration  
+> ![apps images](../images/p2_app.png)
 
 > **Replicas** in Kubernetes are copies of a pod. They ensure the **scaling** of applications by creating **multiple instances** of the same pod based on traffic needs. If a pod fails, Kubernetes automatically creates a new pod to maintain the specified number of replicas.
 
 ## 📦 Vagrantfile Setup
 
-1. **Vagrantfile** setup with:
-   - Linux OS distribution: `bento/debian-12`
-   - **1 CPU** and **512 MB of RAM** minimum
-   - Virtual machine with a specific name:
-     - **jvasseurS** (IP: 192.168.56.110).
+- 1️⃣ **Vagrantfile** setup with:
+	- Linux OS distribution: `bento/debian-12`
+	- **1 CPU** and **512 MB of RAM** minimum
+	- Virtual machine with a specific name:
+		- **jvasseurS** (IP: 192.168.56.110).
 
-2. **`install_k3s_server.sh`** → Installs **K3s in server mode**.
-3. **`install_app.sh`** → Deploys the **applications** on K3s.
+- 2️⃣ **`install_k3s_server.sh`** → Installs **K3s in server mode**.
+- 3️⃣ **`install_app.sh`** → Deploys the **applications** on K3s.
 
-### Application Deployment Process
+## 📱 Application Deployment Process
 This script deploys three web applications (app1, app2, app3) and configures them using **kubectl**. For each application, it:
 
 - Creates a **ConfigMap** (stores configuration data) containing the `index.html` file.

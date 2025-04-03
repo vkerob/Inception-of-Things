@@ -13,9 +13,9 @@ This project teaches how to **configure a cluster**, **orchestrate services**, a
 
 ## 🔗 Table of contents
 
-- [Part 1: K3s and Vagrant]()
-- [Part 2: K3s and three simple applications]()
-- [Part 3: K3d and Argo CD]()
+- [Part 1: K3s and Vagrant](https://github.com/vkerob/Inception-of-Things/blob/main/p1/Readme.md)
+- [Part 2: K3s and three simple applications](https://github.com/vkerob/Inception-of-Things/blob/main/p2/Readme.md)
+- [Part 3: K3d and Argo CD](https://github.com/vkerob/Inception-of-Things/blob/main/p3/Readme.md)
 - [Bonus: Gitlab integration]()
 
 ## 🚀 Key Concepts  
