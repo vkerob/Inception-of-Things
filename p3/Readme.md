@@ -39,15 +39,15 @@ In this part of the project, the goal is to set up **K3d**, **Argo CD**, and imp
 ### 🏗️ Illustrations
 
 
-<img src="../images/p3_argocd.png" alt="subject image" width="450"/>  
+> <img src="../images/p3_argocd.png" alt="subject image" width="450"/>  
 
-> Diagram about global infrastructure   
+> Diagram about global infrastructure    
 
-<img src="../images/p3_argocd_app.png" alt="subject image" width="800"/>  
+> <img src="../images/p3_argocd_app.png" alt="subject image" width="800"/>  
 
 > Argocd application  
 
-<img src="../images/p3_dev_app.png" alt="subject image" width="450"/>
+> <img src="../images/p3_dev_app.png" alt="subject image" width="450"/>  
 
 > Dev app deploy at `http://localhost:8888`
 
