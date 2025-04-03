@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/vkerob/vkerob-IoT-Part3.git
+    repoURL: https://gitlab.local/root/iot-bonus.git
     targetRevision: HEAD
     path: manifests/
   destination:
