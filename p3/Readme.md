@@ -51,11 +51,23 @@ In this part of the project, the goal is to set up **K3d**, **Argo CD**, and imp
 
 > Dev app deploy at `http://localhost:8888`
 
+# 📂 Configuration Structure  
+
+## `./confs/argocd` → Argo CD Deployment  
+- **`argocd-app.yaml`** → Defines the application.  
+- **`ingress.yaml`** → Configures Ingress.  
+- **`namespace.yaml`** → Creates the `argocd` namespace.  
+
+## `./confs/dev` → Application Namespace  
+- **`ingress.yaml`** → Configures Ingress.  
+- **`namespace.yaml`** → Creates the `dev` namespace.  
+
+## `./confs/traefik` → Traefik Deployment  
+- **`namespace.yaml`** → Creates the `traefik` namespace.  
+
 ## ⌨️ Usefull command
 
 ```sh
-# On utilise le makefile ou les script ?
-
 # Configure and deploy :
 # requirements, k3d, argocd, open_port, et show_id
 make all 
@@ -66,7 +78,7 @@ make clean
 # List existing namespaces
 kubectl get ns
 
-# Show deployed pods in the "dev" namespace
+# Check dev pods
 kubectl get pods -n dev
 ```
 
