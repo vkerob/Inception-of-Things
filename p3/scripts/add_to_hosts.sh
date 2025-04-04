@@ -3,7 +3,7 @@
 set -euo pipefail
 
 IP="127.0.0.1"
-DOMAINS=("dev.local" "argocd.local" "gitlab.local")
+DOMAINS=("dev.local" "argocd.local")
 HOSTS_FILE="/etc/hosts"
 
 for domain in "${DOMAINS[@]}"; do

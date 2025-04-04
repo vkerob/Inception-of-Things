@@ -5,7 +5,7 @@ DEV_NAMESPACE="dev"
 GITLAB_NAMESPACE="gitlab"
 ARGOCD_NAMESPACE="argocd"
 HOSTS_FILE="/etc/hosts"
-DOMAINS=("dev.local" "argocd.local" "gitlab.local")
+DOMAINS=("dev.local" "argocd.local")
 
 echo "Nettoyage en cours..."
 
