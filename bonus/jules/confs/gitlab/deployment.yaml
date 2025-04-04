@@ -15,28 +15,18 @@ spec:
     spec:
       containers:
         - name: gitlab
-          image: gitlab/gitlab-ee:latest
+          image: gitlab/gitlab-ce:latest
           ports:
             - containerPort: 80
             - containerPort: 443
             - containerPort: 22
-          volumeMounts:
-            - name: gitlab-volume
-              mountPath: /var/opt/gitlab
-          resources:
-            limits:
-              memory: "1Gi"
-              cpu: "500m"
-            requests:
-              memory: "512Mi"
-              cpu: "250m"
           env:
-            - name: GITLAB_OMNIBUS_CONFIG
-              value: |
-                external_url 'http://localhost/gitlab'
-      volumes: 
-        - name: gitlab-volume
+            - name: GITLAB_ROOT_PASSWORD
+              value: "MonMotDePasseSuperSecret"
+          volumeMounts:
+            - name: gitlab-storage
+              mountPath: /var/opt/gitlab
+      volumes:
+        - name: gitlab-storage
           persistentVolumeClaim:
-            claimName: gitlab-pvc
-
-                
+            claimName: gitlab-local-volume-pvc
