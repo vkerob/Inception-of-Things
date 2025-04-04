@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CLUSTER_NAME="cluster-test"
+CLUSTER_NAME="clusterk3d"
 DEV_NAMESPACE="dev"
 GITLAB_NAMESPACE="gitlab"
 ARGOCD_NAMESPACE="argocd"

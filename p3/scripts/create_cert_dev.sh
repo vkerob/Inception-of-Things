@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
   -keyout wil.key -out wil.crt -subj "/CN=dev.local/O=Dev" >/dev/null 2>&1
 
