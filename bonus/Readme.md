@@ -37,7 +37,7 @@ Host a **local GitLab instance**, configure it to work with **K3s/K3d**, and ens
 - **`namespace.yaml`** → Creates the `dev` namespace.  
 	- ➡️ [What is a namespace ?](#what-is-a-namespace)  
 
-### 🔹 `./confs/gitlab/` → **GitLab Setup**  
+### `./confs/gitlab/` → **GitLab Setup**  
 - **`gitlab-ingress.yaml`** → Configures Ingress.  
 	- ➡️ Accessible at `gitlav.local`.
 	- ➡️ Uses **Traefik** to manage routing.
