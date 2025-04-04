@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: gitlab-pvc
+  name: gitlab-local-volume-pvc
   namespace: gitlab
 spec:
   accessModes:

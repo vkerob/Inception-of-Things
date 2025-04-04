@@ -48,22 +48,28 @@ argocd:
 		echo "Installation d'argocd..."; \
 		kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml; \
 	fi
-	@echo "Attente que le service 'argocd-server' soit prêt..."
-	kubectl rollout status deployment argocd-server -n $(ARGOCD_NAMESPACE) --timeout=120s
+
 
 
 .PHONY: open_port
 open_port:
+	@echo "Attente que le service 'argocd-server' soit prêt..."
+	kubectl rollout status deployment argocd-server -n $(ARGOCD_NAMESPACE) --timeout=160s
 	@echo "Port forwarding argocd sur https://localhost:8080..."
 	kubectl port-forward svc/argocd-server -n $(ARGOCD_NAMESPACE) 8080:80 >/dev/null 2>&1 &
-	@echo "Vérification et port forwarding de l'app dev..."
+	
+	@echo "Attente que le déploiement gitlab soit prêt..."
+	kubectl rollout status deployment gitlab -n $(GITLAB_NAMESPACE) --timeout=300s
+	kubectl port-forward svc/gitlab-svc -n $(GITLAB_NAMESPACE) 8443:80 >/dev/null 2>&1 &
+	
 	@echo "Vérification du service svc-wil dans le namespace dev..."
 	@while [ -z "$$(kubectl get endpoints svc-wil -n dev -o jsonpath='{.subsets[*].addresses}')" ]; do \
 		echo "En attente que svc-wil soit disponible..."; \
 		sleep 5; \
 	done
 	@echo "svc-wil est prêt !"
-	kubectl port-forward svc/svc-wil -n $(DEV_NAMESPACE) 8888:8080 >/dev/null 2>&1 & 
+	kubectl port-forward svc/svc-wil -n $(DEV_NAMESPACE) 8888:8080 >/dev/null 2>&1 &
+
 
 .PHONY: show_id
 show_id:
