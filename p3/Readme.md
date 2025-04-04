@@ -38,7 +38,6 @@ In this part of the project, the goal is to set up **K3d**, **Argo CD**, and imp
 
 ### 🏗️ Illustrations
 
-
 > <img src="../images/p3_argocd.png" alt="subject image" width="450"/>  
 
 > Diagram about global infrastructure    
@@ -51,19 +50,31 @@ In this part of the project, the goal is to set up **K3d**, **Argo CD**, and imp
 
 > Dev app deploy at `http://localhost:8888`
 
-# 📂 Configuration Structure  
+## 📂 Configuration Structure  
 
-## `./confs/argocd` → Argo CD Deployment  
+### `./confs/argocd` → Argo CD Deployment  
 - **`argocd-app.yaml`** → Defines the application.  
+	- ➡️ Pulls from GitHub.  
+	- ➡️ Deploys to dev namespace.  
+	- ➡️ Auto-syncs and removes outdated resources.  
 - **`ingress.yaml`** → Configures Ingress.  
+	- ➡️ Accessible at `argocd.local`.
+	- ➡️ Uses **Traefik** to manage routing.
+		> **Traefik** is a reverse proxy and load balancer for microservices.
+	- ➡️ Secure access with `argocd-tls`.
+	- ➡️ Forwards requests to `argocd-server` on port `80`.  
 - **`namespace.yaml`** → Creates the `argocd` namespace.  
+	- ➡️ [What is a namespace ?](#what-is-a-namespace)  
 
-## `./confs/dev` → Application Namespace  
-- **`ingress.yaml`** → Configures Ingress.  
+### `./confs/dev` → Application Namespace  
+- **`ingress.yaml`** → Configures Ingress. 
+	- ➡️ Accessible at `dev.local`.
+	- ➡️ Uses **Traefik** to manage routing.
+		> **Traefik** is a reverse proxy and load balancer for microservices.
+	- ➡️ Secure access with `argocd-tls`.
+	- ➡️ Forwards requests to `argocd-server` on port `8080`.   
 - **`namespace.yaml`** → Creates the `dev` namespace.  
-
-## `./confs/traefik` → Traefik Deployment  
-- **`namespace.yaml`** → Creates the `traefik` namespace.  
+	- ➡️ [What is a namespace ?](#what-is-a-namespace)  
 
 ## ⌨️ Usefull command
 
