@@ -1,0 +1,71 @@
+global:
+  ingress:
+    enabled: false
+  hosts:
+    domain: gitlab.local
+  edition: ce
+
+nginx-ingress:
+  enabled: false
+
+certmanager:
+  install: false
+
+certmanager-issuer:
+  email: ""
+  install: false
+
+gitlab:
+  grafana:
+    enabled: false
+  kas:
+    enabled: false
+  gitaly:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        cpu: 200m
+        memory: 512Mi
+  sidekiq:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 256Mi
+  webservice:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 300m
+        memory: 512Mi
+  toolbox:
+    enabled: true
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        cpu: 50m
+        memory: 128Mi
+  migrations:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        cpu: 50m
+        memory: 128Mi
+  gitlab-shell:
+    resources:
+      requests:
+        cpu: 20m
+        memory: 64Mi
+      limits:
+        cpu: 100m
+        memory: 128Mi

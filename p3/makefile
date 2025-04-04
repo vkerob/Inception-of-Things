@@ -7,11 +7,10 @@ DEPLOY_ARGOCD_PATH = ./scripts/deploy_argocd.sh
 INSTALL_TRAEFIK_PATH = ./scripts/install_traefik.sh
 ARGOCD_NAMESPACE = argocd
 DEV_NAMESPACE = dev
-ARGOCD_CONF_PATH = ./confs/argocd
-DEV_CONF_PATH = ./confs/dev
+ARGOCD_CONFS_PATH = ./confs/argocd
+DEV_CONFS_PATH = ./confs/dev
 URL_ARGOCD = https://argocd.local/
 
-.PHONY: help
 help:
 	@echo "Commandes disponibles :"
 	@echo "  make help          : Affiche cette aide."
@@ -32,7 +31,7 @@ k3d:
 	@echo "Lancement de create_cluster.sh..."
 	@bash $(CREATE_CLUSTER_PATH)
 	@echo "Création des namespaces sur le cluster k3d.."
-	@kubectl apply -f $(ARGOCD_CONF_PATH)/namespace.yaml
+	@kubectl apply -f $(ARGOCD_CONFS_PATH)/namespace.yaml
 	@kubectl apply -f $(DEV_CONF_PATH)/namespace.yaml
 	@echo "Attente de l'initialisation du cluster k3d..."
 	@kubectl wait --for=condition=Ready nodes --all --timeout=60s
@@ -51,12 +50,12 @@ dev:
 	@echo "Lancement de create_cert_dev.sh..."
 	@bash $(CREATE_CERT_DEV_PATH)
 	@echo "Déploiement de l'application dev..."
-	@kubectl apply -f $(ARGOCD_CONF_PATH)/argocd_app.yaml
+	@kubectl apply -f $(ARGOCD_CONFS_PATH)/argocd_app.yaml
 
 ingress:
 	@echo "Déploiement des ingress..."
-	@kubectl apply -f $(DEV_CONF_PATH)/ingress.yaml
-	@kubectl apply -f $(ARGOCD_CONF_PATH)/ingress.yaml
+	@kubectl apply -f $(DEV_CONFS_PATH)/ingress.yaml
+	@kubectl apply -f $(ARGOCD_CONFS_PATH)/ingress.yaml
 
 show_id:
 	@echo ""
@@ -72,11 +71,11 @@ clean:
 	@echo "lancement de clean_cluster.sh..."
 	@bash $(CLEAN_CLUSTER_PATH)
 
-all: requirements k3d add_to_hosts argocd dev ingress show_id 
+all: requirements k3d add_to_hosts argocd dev ingress show_id help
 
 re:
 	@make clean
 	@make all
 	@echo "Reconstruction terminée !"
 
-.PHONY: requirements,k3d, add_to_hosts, argocd, ingress, show_id, dev, clean, all, re
+.PHONY: requirements,k3d, add_to_hosts, argocd, dev, ingress, show_id, clean, help, all, re

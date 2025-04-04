@@ -1,21 +1,21 @@
 #!/bin/bash
+set -euo pipefail
 
-set -e
+CLUSTER_NAME="clusterk3d"
+ARGOCD_CONFS_PATH="../confs/argocd/"
+DEV_CONFS_PATH="../confs/dev/"
+TRAEFIK_CONFS_PATH="../confs/traefik/"
 
-CLUSTER_NAME="cluster-test"
-
-echo "Création du cluster $CLUSTER_NAME si nécessaire..."
 
 if k3d cluster list | grep -q "$CLUSTER_NAME"; then
-  echo "Le cluster $CLUSTER_NAME existe déjà."
+    echo "Le cluster $CLUSTER_NAME existe déjà."
 else
-  echo "Création du cluster $CLUSTER_NAME..."
-  k3d cluster create "$CLUSTER_NAME" \
-    --agents 1 \
+    echo "Création du cluster $CLUSTER_NAME..."
+    k3d cluster create "$CLUSTER_NAME" --agents 2 \
+    --port "80:80@loadbalancer" \
     --port "443:443@loadbalancer" \
-    --k3s-arg "--disable=traefik@server:0"
+    --k3s-arg "--kubelet-arg=eviction-hard=imagefs.available<1%,nodefs.available<1%@all" \
+    --k3s-arg "--kubelet-arg=eviction-minimum-reclaim=imagefs.available=1%,nodefs.available=1%@all" \
+    --servers-memory "4GB" \
+    --agents-memory "4GB"
 fi
-
-echo "Attente que les nœuds soient prêts..."
-kubectl wait --for=condition=Ready nodes --all --timeout=60s
-echo "Cluster prêt."
