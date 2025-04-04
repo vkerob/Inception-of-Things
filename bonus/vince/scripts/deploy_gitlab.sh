@@ -3,13 +3,10 @@ set -e
 
 GITLAB_NS="gitlab"
 CHART_REPO="https://charts.gitlab.io/"
-GITLAB_CONFS_PATH="../confs/gitlab"
-VALUES_FILE="${GITLAB_CONFS_PATH}/gitlab-values.yaml"
+GITLAB_CONFS_PATH="confs/gitlab"
+VALUES_FILE="${GITLAB_CONFS_PATH}/gitlab_values.yaml"
 RELEASE_NAME="gitlab"
 
-
-echo "==> Création du namespace GitLab..."
-kubectl apply -f "${GITLAB_CONFS_PATH}/namespace.yaml"
 
 echo "==> Création certificat TLS auto-signé..."
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
@@ -26,14 +23,3 @@ helm upgrade --install "$RELEASE_NAME" gitlab/gitlab \
   -n "$GITLAB_NS" \
   -f "$VALUES_FILE" \
   --timeout 30m
-
-echo "==> Application de l'Ingress Traefik pour GitLab..."
-kubectl apply -f "${GITLAB_CONFS_PATH}/gitlab-ingress.yaml"
-
-
-echo "==> Récupération du mot de passe root GitLab..."
-PASSWORD=$(kubectl get secret -n "$GITLAB_NS" gitlab-gitlab-initial-root-password \
-  -o jsonpath="{.data.password}" | base64 -d)
-echo "Mot de passe root GitLab : $PASSWORD"
-echo
-echo "✅ GitLab est accessible sur https://gitlab.local"

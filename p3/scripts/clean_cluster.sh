@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 CLUSTER_NAME="clusterk3d"
 DEV_NAMESPACE="dev"
 GITLAB_NAMESPACE="gitlab"

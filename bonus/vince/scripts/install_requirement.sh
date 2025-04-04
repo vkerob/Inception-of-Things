@@ -1,6 +1,8 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
+
+KUBECTL_VERSION="v1.32.0"
 
 echo "Script d'installation de l'environnement K3D + outils"
 
@@ -30,6 +32,8 @@ if is_installed docker; then
     sudo apt update
     sudo apt install -y docker-ce docker-ce-cli containerd.io
 
+    echo "Ajout de $USER au groupe docker"
+    sudo usermod -aG docker $USER
 fi
 
 # === k3d ===
@@ -48,7 +52,6 @@ if ! is_installed kubectl; then
 
     if [[ -z "$KUBECTL_VERSION" ]]; then
         echo "Impossible de récupérer la dernière version de kubectl, utilisation d'une version par défaut"
-        KUBECTL_VERSION="v1.32.0"
     fi
 
     echo "Téléchargement de kubectl version : $KUBECTL_VERSION"
@@ -59,12 +62,3 @@ if ! is_installed kubectl; then
 else
     echo "kubectl est déjà installé"
 fi
-
-# === Helm ===
-if is_installed helm; then
-    echo "✅ Helm est déjà installé"
-else
-    echo "📦 Installation de Helm..."
-    curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-fi
-
