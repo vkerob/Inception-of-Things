@@ -62,3 +62,11 @@ if ! is_installed kubectl; then
 else
     echo "kubectl est déjà installé"
 fi
+
+# === Helm ===
+if is_installed helm; then
+    echo "✅ Helm est déjà installé"
+else
+    echo "📦 Installation de Helm..."
+    curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+fi
