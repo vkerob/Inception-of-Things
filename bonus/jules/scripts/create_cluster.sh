@@ -12,7 +12,6 @@ if k3d cluster list | grep -q "$CLUSTER_NAME"; then
 else
     echo "Création du cluster $CLUSTER_NAME..."
     k3d cluster create "$CLUSTER_NAME" --agents 2 \
-    --port "80:80@loadbalancer" \
     --port "443:443@loadbalancer" \
     --k3s-arg "--kubelet-arg=eviction-hard=imagefs.available<1%,nodefs.available<1%@all" \
     --k3s-arg "--kubelet-arg=eviction-minimum-reclaim=imagefs.available=1%,nodefs.available=1%@all" \
