@@ -21,5 +21,11 @@ helm repo add gitlab "$CHART_REPO" || true
 helm repo update
 helm upgrade --install "$RELEASE_NAME" gitlab/gitlab \
   -n "$GITLAB_NS" \
+  --set certmanager.install=false \
+  --set global.ingress.configureCertmanager=false \
+  --set global.enableServiceLinks=false \
+  --set global.shell.enabled=false \
+  --set gitlab.toolbox.enabled=false \
+  --set global.appConfig.cron_jobs.enabled=false \
   -f "$VALUES_FILE" \
   --timeout 30m

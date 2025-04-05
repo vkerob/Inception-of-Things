@@ -2,15 +2,13 @@
 #!/bin/bash
 set -euo pipefail
 
-CLUSTER_NAME="clusterk3d"
-ARGOCD_CONFS_PATH="../confs/argocd/"
-DEV_CONFS_PATH="../confs/dev/"
-TRAEFIK_CONFS_PATH="../confs/traefik/"
+DEV_NAMESPACE="dev"
 
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout wil.key -out wil.crt -subj "/CN=dev.local/O=Dev" >/dev/null 2>&1
 
-if k3d cluster list | grep -q "$CLUSTER_NAME"; then
-    echo "Le cluster $CLUSTER_NAME existe déjà."
-else
-    echo "Création du cluster $CLUSTER_NAME..."
-    k3d cluster create "$CLUSTER_NAME" --port "443:443@loadbalancer"
-fi
+kubectl create secret tls wil-tls \
+  --cert=wil.crt --key=wil.key \
+  -n $DEV_NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+
+rm wil.crt wil.key
