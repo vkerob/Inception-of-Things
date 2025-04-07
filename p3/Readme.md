@@ -10,14 +10,14 @@ In this part of the project, the goal is to set up **K3d**, **Argo CD**, and imp
 - 1️⃣ **K3d Setup**:  
    - Install **K3d**.
 
-	> #### Difference Between K3s and K3d ?
+	> #### 💡 Difference Between K3s and K3d ?
 	> - **K3s** is a lightweight Kubernetes distribution, optimized for resource-constrained environments.
 	> - **K3d** provides an easier way to run **K3s** within Docker containers, allowing users to simulate Kubernetes clusters locally.
 
 - 2️⃣ **Argo CD Setup**:  
    - Create two namespaces: **argocd** (for Argo CD) and **dev** (for your app).
 
-	> #### What is a namespace ?
+	> #### 💡 What is a namespace ?
 	> A **namespace** in Kubernetes **isolates resources within a cluster** to organize and separate resources from applications or environments (like dev, argocd).
 
 - 3️⃣ **GitHub Repo**:  
@@ -31,7 +31,7 @@ In this part of the project, the goal is to set up **K3d**, **Argo CD**, and imp
 - 5️⃣ **Continuous Deployment**:  
    - **Argo CD** will automatically deploy the app from GitHub whenever changes are made.
 
-	> #### What is Argo CD ?  
+	> #### 💡 What is Argo CD ?  
 	> **Argo CD** is a **GitOps** tool that **automates** the deployment and synchronization of **Kubernetes applications** using a Git repository as the **single source of truth**. It ensures declarative and version-controlled deployments.  
 
 ---
@@ -60,7 +60,7 @@ In this part of the project, the goal is to set up **K3d**, **Argo CD**, and imp
 - **`ingress.yaml`** → Configures Ingress.  
 	- ➡️ Accessible at `argocd.local`.
 	- ➡️ Uses **Traefik** to manage routing.
-		> **Traefik** is a reverse proxy and load balancer for microservices.
+		> 💡 **Traefik** is a reverse proxy and load balancer for microservices.
 	- ➡️ Secure access with `argocd-tls`.
 	- ➡️ Forwards requests to `argocd-server` on port `80`.  
 - **`namespace.yaml`** → Creates the `argocd` namespace.  
@@ -70,7 +70,7 @@ In this part of the project, the goal is to set up **K3d**, **Argo CD**, and imp
 - **`ingress.yaml`** → Configures Ingress. 
 	- ➡️ Accessible at `dev.local`.
 	- ➡️ Uses **Traefik** to manage routing.
-		> **Traefik** is a reverse proxy and load balancer for microservices.
+		> 💡 **Traefik** is a reverse proxy and load balancer for microservices.
 	- ➡️ Secure access with `argocd-tls`.
 	- ➡️ Forwards requests to `argocd-server` on port `8080`.   
 - **`namespace.yaml`** → Creates the `dev` namespace.  
