@@ -1,6 +1,12 @@
 global:
   hosts:
     domain: gitlab.local
+    gitlab:
+      name: gitlab.local
+  appConfig:
+    externalUrl: https://gitlab.local
+
+
   ingress:
     enabled: false
   certmanager:
@@ -23,6 +29,10 @@ gitlab-runner:
 
 prometheus:
   install: false
+
+certmanager-issuer:
+  enabled: false
+  email: dev@fake.local
 
 gitlab:
   grafana:
