@@ -81,7 +81,7 @@ show_id:
 	@echo "Identifiants Gitlab Web"
 	@echo "URL      : $(URL_GITLAB)"
 	@echo "Utilisateur : root"
-	kubectl -n gitlab get secret gitlab-initial-root-password \
+	kubectl -n gitlab get secret gitlab-gitlab-initial-root-password \
 		-o jsonpath="{.data.password}" | base64 -d; echo
 	@echo ""
 	@echo "L'interface Gitlab est accessible !"
@@ -90,7 +90,7 @@ clean:
 	@echo "lancement de clean_cluster.sh..."
 	@bash $(CLEAN_CLUSTER_PATH)
 
-all: requirements k3d add_to_hosts argocd dev gitlab ingress show_id
+all: requirements k3d add_to_hosts argocd gitlab dev ingress show_id
 
 re:
 	@make clean

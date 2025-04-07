@@ -7,7 +7,10 @@ global:
     enabled: false
   certmanager-issuer:
     enabled: false
-
+  kas:
+    enabled: false
+  exporter:
+    enabled: false
 
 nginx-ingress:
   enabled: false
@@ -18,9 +21,6 @@ certmanager:
 gitlab-runner:
   install: false
 
-certmanager-issuer:
-  install: false
-
 prometheus:
   install: false
 
@@ -29,16 +29,3 @@ gitlab:
     enabled: false
   kas:
     enabled: false
-  exporter:
-    enabled: false
-  sidekiq:
-    minReplicas: 1
-    maxReplicas: 2
-    concurrency: 10
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "200Mi"
-      limits:
-        cpu: "200m"
-        memory: "400Mi"
