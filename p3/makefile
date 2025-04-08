@@ -33,7 +33,7 @@ k3d:
 	@bash $(CREATE_CLUSTER_PATH)
 	@echo "Creating namespaces on k3d cluster..."
 	@kubectl apply -f $(ARGOCD_CONFS_PATH)/namespace.yaml
-	@kubectl apply -f $(DEV_CONF_PATH)/namespace.yaml
+	@kubectl apply -f $(DEV_CONFS_PATH)/namespace.yaml
 	@echo "Waiting for k3d cluster initialization..."
 	@kubectl wait --for=condition=Ready nodes --all --timeout=60s
 

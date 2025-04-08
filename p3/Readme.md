@@ -46,6 +46,28 @@ In this part of the project, the goal is to set up **K3d**, **Argo CD**, and imp
 
 > Argocd application  
 
+### About struture
+
+- **dev-app**
+
+	- **Service (svc)**
+	- `svc-wil`: A service in the `dev` namespace that provides a stable network endpoint for accessing pods, and is healthy and synced with Argo CD.
+
+		- **Endpoints (ep)**
+		- `svc-wil`: Represents the Kubernetes endpoints for the service `svc-wil`, where pods can be accessed.
+
+		- **EndpointSlice (endpointslice)**
+		- `svc-wil-lbtt2`: Manages the endpoints of the `svc-wil` service for more efficient scaling.
+
+	- **Deployment (deploy)**
+	- `wil`: A deployment in the `dev` namespace that manages pod deployment and scaling, and is healthy and synced.
+
+		- **ReplicaSet (rs)**
+		- `wil-6f58658b8b`: A ReplicaSet ensuring the correct number of replicas of the pod `wil-6f58658b8b` are running, part of the `wil` deployment.
+
+			- **Pod (pod)**
+			- `wil-6f58658b8b-8hs6f`: A specific pod in the `dev` namespace, which is healthy and running.
+
 > <img src="../images/p3_dev_app.png" alt="subject image" width="450"/>  
 
 > Dev app deploy at `http://localhost:8888`
