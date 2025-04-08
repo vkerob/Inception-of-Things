@@ -21,6 +21,7 @@ help:
 	@echo "  make dev           : Create certificate for dev application and deploy the application."
 	@echo "  make ingress       : Deploy ingresses for dev application and Argo CD."
 	@echo "  make show_id       : Display credentials to connect to Argo CD web interface."
+	@echo "  make clean         : Clean the k3d cluster and remove all resources."
 	@echo "  make all           : Execute all steps in order: requirements, k3d, argocd, open_port, and show_id."
 
 requirements:

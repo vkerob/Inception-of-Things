@@ -8,11 +8,11 @@ spec:
   tls:
     - hosts:
         - dev.local
-      secretName: dev-app-tls
+      secretName: wil-tls
   rules:
     - host: dev.local
       http:
-        paths:
+        paths: 
           - path: /
             pathType: Prefix
             backend:

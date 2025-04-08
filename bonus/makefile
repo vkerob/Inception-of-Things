@@ -6,6 +6,7 @@ CREATE_CLUSTER_PATH = ./scripts/create_cluster.sh
 DEPLOY_ARGOCD_PATH = ./scripts/deploy_argocd.sh
 INSTALL_TRAEFIK_PATH = ./scripts/install_traefik.sh
 DEPLOY_GITLAB_PATH = ./scripts/deploy_gitlab.sh
+DEPLOY_REPO_GITLAB_PATH = ./scripts/deploy_repo_gitlab.sh
 ARGOCD_NAMESPACE = argocd
 DEV_NAMESPACE = dev
 GITLAB_NAMESPACE = gitlab
@@ -26,6 +27,7 @@ help:
 	@echo "  make gitlab        : Install Gitlab on the k3d cluster."
 	@echo "  make ingress       : Deploy ingresses for dev application and Argo CD."
 	@echo "  make show_id       : Display credentials to connect to Argo CD web interface."
+	@echo "  make clean         : Clean the k3d cluster and remove all resources."
 	@echo "  make all           : Execute all steps in order: requirements, k3d, argocd, open_port, and show_id."
 
 requirements:
@@ -57,6 +59,10 @@ argocd:
 	@echo "Waiting for 'argocd-server' service to be ready..."
 	@kubectl rollout status deployment argocd-server -n $(ARGOCD_NAMESPACE) --timeout=120s
 
+dev_app:
+	@echo "Creating repository for dev application..."
+	@bash $(DEPLOY_REPO_GITLAB_PATH)
+
 dev:
 	@echo "Running create_cert_dev.sh..."
 	@echo "Deploying dev application..."
@@ -66,6 +72,7 @@ gitlab:
 	@echo "Running deploy_gitlab.sh..."
 	@bash $(DEPLOY_GITLAB_PATH)
 	@echo "Waiting for 'gitlab' service to be ready..."
+	@kubectl rollout status deployment gitlab-webservice-default -n $(GITLAB_NAMESPACE) --timeout=500s
 
 ingress:
 	@echo "Deploying ingresses..."
@@ -96,7 +103,7 @@ clean:
 	@echo "Running clean_cluster.sh..."
 	@bash $(CLEAN_CLUSTER_PATH)
 
-all: requirements k3d add_to_hosts argocd gitlab dev ingress show_id
+all: requirements k3d add_to_hosts argocd gitlab dev_app dev ingress show_id
 
 re:
 	@make clean
