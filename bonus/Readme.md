@@ -61,10 +61,17 @@ Host a **local GitLab instance**, configure it to work with **K3s/K3d**, and ens
 - **`namespace.yaml`** → Creates the `gitlab` namespace.
 	- ➡️ [What is a namespace ?](#💡-what-is-a-namespace)  
 
-## 🗺️ 
+## 🗺️ Acces bonus part
+
+Links :
+> https://argocd.local/  
+> https://gitlab.local/
 
 ![bonus_overview](../images/bonus_overview.png)
 
+This part involves integrating a **self-hosted GitLab instance** into our **K3d cluster** using a **local Docker image**. The goal is to push our **Kubernetes manifest** from **Part 3**, originally stored on **GitHub**, to this new GitLab repository.
+
+ArgoCD will then be reconfigured to sync resources from the new **local GitLab repository**, replacing the dependency on the **GitHub repository**.
 
 ## 🧾 Global Summary: GitLab and argocd in Kubernetes
 
@@ -118,7 +125,9 @@ Displays **all argocd pods** deployed in the **`argocd` namespace**.
 | `argocd-repo-server` | Clones Git repos and renders Kubernetes manifests |
 | `argocd-server` | Exposes the Web UI and API for Argo CD |
 
-### 🏎️ About performance
+---
+
+### 🏎️ About performances
 
 We used **swap** method to improve performance management during execution.
 **Swap** is a **disk space** used when **RAM** is full.
