@@ -8,6 +8,10 @@ Host a **local GitLab instance**, configure it to work with **K3s/K3d**, and ens
 
 - **Deploy GitLab locally** → Run a self-hosted GitLab instance.  
 - **Create a `gitlab` namespace** → Isolate GitLab services in Kubernetes.  
+
+> #### 💡 What is a namespace ?
+	> A **namespace** in Kubernetes **isolates resources within a cluster** to organize and separate resources from applications or environments (like dev, argocd).
+
 - **Integrate GitLab with K3s/K3d** → Allow GitLab to interact with the cluster.  
 - **CI/CD with GitLab** → Adapt ArgoCD & GitOps to work with the local GitLab. 
 
@@ -29,7 +33,7 @@ Host a **local GitLab instance**, configure it to work with **K3s/K3d**, and ens
 	- ➡️ Forwards requests to `argocd-server` on port `80`.  
 
 - **`namespace.yaml`** → Creates the `argocd` namespace.  
-	- ➡️ [What is a namespace ?](#what-is-a-namespace)  
+	- ➡️ [What is a namespace ?](#💡-what-is-a-namespace)  
 
 ### `./confs/dev` → Application Namespace  
 - **`ingress.yaml`** → Configures Ingress. 
@@ -40,7 +44,7 @@ Host a **local GitLab instance**, configure it to work with **K3s/K3d**, and ens
 	- ➡️ Forwards requests to `argocd-server` on port `8080`.   
 
 - **`namespace.yaml`** → Creates the `dev` namespace.  
-	- ➡️ [What is a namespace ?](#what-is-a-namespace)  
+	- ➡️ [What is a namespace ?](#💡-what-is-a-namespace)  
 
 ### `./confs/gitlab/` → **GitLab Setup**  
 - **`gitlab-ingress.yaml`** → Configures Ingress.  
@@ -55,7 +59,64 @@ Host a **local GitLab instance**, configure it to work with **K3s/K3d**, and ens
 	- ➡️ Customizes deployment (domain, user setup, etc.).  
 
 - **`namespace.yaml`** → Creates the `gitlab` namespace.
-	- ➡️ [What is a namespace ?](#what-is-a-namespace)  
+	- ➡️ [What is a namespace ?](#💡-what-is-a-namespace)  
+
+## 🗺️ 
+
+![bonus_overview](../images/bonus_overview.png)
+
+
+## 🧾 Global Summary: GitLab and argocd in Kubernetes
+
+The command:
+```sh
+kubectl get pods -n gitlab
+```
+
+![bonus_gitlab_pods](../images/bonus_gitlab_pods.png)
+
+Displays **all GitLab pods** deployed in the **`gitlab` namespace**.
+
+Each pod represents a **component** of the GitLab architecture running inside the Kubernetes cluster.
+
+### ⚙️ Main Observed Components
+
+| Pod Name | Description |
+| --- | --- |
+| `gitlab-webservice-default` | Main GitLab web server |
+| `gitlab-sidekiq-all-in-1` | Background job processing |
+| `gitlab-postgresql` | Primary database (PostgreSQL) |
+| `gitlab-redis-master` | Caching and job queues (Redis) |
+| `gitlab-registry` | Docker image registry |
+| `gitlab-gitlab-shell` | Handles Git/SSH connections |
+| `gitlab-gitaly` | Manages Git repository access |
+| `gitlab-minio` | Object storage (S3 compatible) |
+| `gitlab-toolbox` | Admin and maintenance tools |
+| `gitlab-exporter` | Monitoring and metrics |
+| `migrations`, `minio-create-buckets` | One-time init jobs (DB, storage) |
+
+---
+
+The command:
+```sh
+kubectl get pods -n agrocd
+```
+
+![bonus_argocd_pods](../images/bonus_argocd_pods.png)
+
+Displays **all argocd pods** deployed in the **`argocd` namespace**.
+
+### ⚙️ Main Observed Components
+
+| Pod Name | Description |
+| --- | --- |
+| `argocd-application-controller` | Manages application state and synchronizes resources |
+| `argocd-applicationset-controller` | Manages multiple applications via ApplicationSets |
+| `argocd-dex-server` | Handles authentication (OAuth, LDAP, etc.) |
+| `argocd-notifications-controller` | Sends notifications (Slack, email, etc.) |
+| `argocd-redis` | In-memory database used by Argo CD for caching |
+| `argocd-repo-server` | Clones Git repos and renders Kubernetes manifests |
+| `argocd-server` | Exposes the Web UI and API for Argo CD |
 
 ### 🏎️ About performance
 
@@ -75,6 +136,9 @@ make all
 
 # Delete cluster
 make clean
+
+# List existing clusters
+kubectl config get-clusters
 
 # List existing namespaces
 kubectl get ns

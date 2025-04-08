@@ -65,6 +65,9 @@ vagrant ssh jvasseurSW
 # Show local IP informations
 ip a show eth1
 
+# List existing clusters
+kubectl config get-clusters
+
 # Show all objects on cluster
 kubectl get all
 

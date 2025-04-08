@@ -102,7 +102,6 @@ git clone git@github.com:vkerob/Inception-of-Things.git
 cd Inception-of-Things/
 ```
 
-
 ## 👨‍🎓 Contributors
 
 - vincent, vkerob [https://github.com/vkerob](https://github.com/vkerob)  

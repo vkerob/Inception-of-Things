@@ -64,7 +64,7 @@ In this part of the project, the goal is to set up **K3d**, **Argo CD**, and imp
 	- ➡️ Secure access with `argocd-tls`.
 	- ➡️ Forwards requests to `argocd-server` on port `80`.  
 - **`namespace.yaml`** → Creates the `argocd` namespace.  
-	- ➡️ [What is a namespace ?](#what-is-a-namespace)  
+	- ➡️ [What is a namespace ?](#💡-what-is-a-namespace)  
 
 ### `./confs/dev` → Application Namespace  
 - **`ingress.yaml`** → Configures Ingress. 
@@ -74,7 +74,7 @@ In this part of the project, the goal is to set up **K3d**, **Argo CD**, and imp
 	- ➡️ Secure access with `argocd-tls`.
 	- ➡️ Forwards requests to `argocd-server` on port `8080`.   
 - **`namespace.yaml`** → Creates the `dev` namespace.  
-	- ➡️ [What is a namespace ?](#what-is-a-namespace)  
+	- ➡️ [What is a namespace ?](#💡-what-is-a-namespace)  
 
 ## ⌨️ Usefull command
 
@@ -85,6 +85,9 @@ make all
 
 # Delete cluster
 make clean
+
+# List existing clusters
+kubectl config get-clusters
 
 # List existing namespaces
 kubectl get ns
