@@ -1,7 +1,7 @@
 REQUIREMENTS_FILE_PATH = ./scripts/install_requirement.sh
 ADD_TO_HOSTS_PATH = ./scripts/add_to_hosts.sh
 CLEAN_CLUSTER_PATH = ./scripts/clean_cluster.sh
-CREATE_CERT_DEV_PATH = ./scripts/create_cert_dev.sh
+CREATE_CERT_PATH = ./scripts/create_cert.sh
 CREATE_CLUSTER_PATH = ./scripts/create_cluster.sh
 DEPLOY_ARGOCD_PATH = ./scripts/deploy_argocd.sh
 INSTALL_TRAEFIK_PATH = ./scripts/install_traefik.sh
@@ -46,6 +46,11 @@ add_to_hosts:
 	@echo "Running add_to_hosts.sh..."
 	@bash $(ADD_TO_HOSTS_PATH)
 
+create_cert:
+	@echo "Lancement de create_cert.sh..."
+	@bash $(CREATE_CERT_PATH)
+	@echo "Création du certificat pour l'application dev..."
+
 argocd:
 	@echo "Running deploy_argocd.sh..."
 	@bash $(DEPLOY_ARGOCD_PATH)
@@ -54,7 +59,6 @@ argocd:
 
 dev:
 	@echo "Running create_cert_dev.sh..."
-	@bash $(CREATE_CERT_DEV_PATH)
 	@echo "Deploying dev application..."
 	@kubectl apply -f $(ARGOCD_CONFS_PATH)/argocd_app.yaml
 
@@ -97,4 +101,4 @@ re:
 	@make all
 	@echo "Rebuild complete!"
 
-.PHONY: requirements,k3d, add_to_hosts, argocd, dev, gitlab, ingress, show_id, clean, help, all, re
+.PHONY: requirements, k3d, add_to_hosts, create_cert, argocd, dev, gitlab, ingress, show_id, clean, help, all, re
