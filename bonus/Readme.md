@@ -10,7 +10,7 @@ Host a **local GitLab instance**, configure it to work with **K3s/K3d**, and ens
 - **Create a `gitlab` namespace** → Isolate GitLab services in Kubernetes.  
 
 > #### 💡 What is a namespace ?
-	> A **namespace** in Kubernetes **isolates resources within a cluster** to organize and separate resources from applications or environments (like dev, argocd).
+> A **namespace** in Kubernetes **isolates resources within a cluster** to organize and separate resources from applications or environments (like dev, argocd).
 
 - **Integrate GitLab with K3s/K3d** → Allow GitLab to interact with the cluster.  
 - **CI/CD with GitLab** → Adapt ArgoCD & GitOps to work with the local GitLab. 
