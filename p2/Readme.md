@@ -68,6 +68,9 @@ kubectl get all
 # Show nodes on cluster
 kubectl get nodes -o wide
 
+# Show all resources running in the kube-system namespace
+kubectl get all -n kube-system
+
 # Destroy the machines to reset everything
 vagrant destroy -f
 ```
