@@ -14,7 +14,7 @@ get_gitlab_access_token() {
     echo "[INFO] Getting GitLab access token..." >&2
     curl_response=$(curl -k --silent --show-error --request POST \
         --form "grant_type=password" --form "username=root" \
-        --form "password=6GPo6TnMvHMZJzDTZTEb4LrxDE5IvVbLvkRXoJWdgu3wkRGDRZOUEpNIxnepT8jL" \
+        --form "password=0hUehDKTPnP7BJMDDUaS5tu8dQPwRu1J2iWreXKhNjsAUZw7iFsd3v3IrdJhFLrm" \
         "$GITLAB_URL/oauth/token")
 
     if [[ -z "$curl_response" ]]; then
@@ -89,7 +89,9 @@ cd "$CURRENT_DIR"
 
 cd /tmp/"$GITLAB_REPO_NAME"
 
-echo "[INFO] Pushing content to GitLab..."
+git config --global http.sslVerify false
+
+echo "[INFO] Push du contenu vers GitLab..."
 if ! git push gitlab --all; then
     echo "[ERROR] Push to GitLab failed."
     exit 1
