@@ -3,48 +3,48 @@
 CONFIG_SRC="/vagrant/confs/config-server.yaml"
 CONFIG_DST="/etc/rancher/k3s/config.yaml"
 
-echo "Installation de K3s en mode contrôleur sur jvasseurS..."
+echo "Installing K3s in controller mode on jvasseurS..."
 
-# Vérifier si le fichier de configuration existe dans /vagrant/confs
+# Check if configuration file exists in /vagrant/confs
 if [ ! -f "$CONFIG_SRC" ]; then
-    echo "Erreur : Le fichier de configuration $CONFIG_SRC n'a pas été trouvé."
+    echo "Error: Configuration file $CONFIG_SRC not found."
     exit 1
 fi
 
-# Création du répertoire de configuration s'il n'existe pas
+# Create configuration directory if it doesn't exist
 sudo mkdir -p /etc/rancher/k3s
 
-# Copie et renommage du fichier de configuration
-echo "Copie de la configuration du serveur K3s..."
+# Copy and rename configuration file
+echo "Copying K3s server configuration..."
 sudo cp "$CONFIG_SRC" "$CONFIG_DST"
 sudo chmod 644 "$CONFIG_DST"
 
-echo "Installation du serveur K3s..."
+echo "Installing K3s server..."
 
-# Installation du serveur K3s
+# Installing K3s server
 export K3S_KUBECONFIG_MODE="644"
 export INSTALL_K3S_EXEC="server --config /etc/rancher/k3s/config.yaml"
 
 curl -sfL https://get.k3s.io/ | sh -
 
 
-# Vérifier que le fichier `node-token` est bien généré avant de continuer
-echo "Attente de la génération du token..."
+# Check that the `node-token` file is generated before continuing
+echo "Waiting for token generation..."
 TIMEOUT=30
 while [ ! -f "/var/lib/rancher/k3s/server/node-token" ]; do
     sleep 1
     TIMEOUT=$((TIMEOUT - 1))
     if [ "$TIMEOUT" -eq 0 ]; then
-        echo "Erreur : Le token K3s n'a pas été généré après 30 secondes."
+        echo "Error: K3s token was not generated after 30 seconds."
         exit 1
     fi
 done
 
-# Lecture du token
+# Read the token
 TOKEN=$(sudo cat /var/lib/rancher/k3s/server/node-token)
 SERVER="https://192.168.56.110:6443"
 
-echo "Écriture du token dans config-agent.yaml..."
+echo "Writing token to config-agent.yaml..."
 sudo tee /vagrant/confs/config-agent.yaml > /dev/null <<EOF
 server: "$SERVER"
 token: "$TOKEN"
@@ -55,4 +55,4 @@ echo 'alias k="kubectl"' | sudo tee /etc/profile.d/kubectl_alias.sh > /dev/null
 sudo chmod +x /etc/profile.d/kubectl_alias.sh
 
 
-echo "Installation terminée ! K3s est prêt."
+echo "Installation complete! K3s is ready."

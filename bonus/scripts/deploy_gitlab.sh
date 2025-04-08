@@ -8,7 +8,7 @@ VALUES_FILE="${GITLAB_CONFS_PATH}/gitlab_values.yaml"
 RELEASE_NAME="gitlab"
 
 
-echo "==> Création certificat TLS auto-signé..."
+echo "==> Creating self-signed TLS certificate..."
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
   -keyout tls.key -out tls.crt -subj "/CN=gitlab.local/O=GitLab" >/dev/null 2>&1
 kubectl create secret tls gitlab-tls \
@@ -16,7 +16,7 @@ kubectl create secret tls gitlab-tls \
   -n "$GITLAB_NS" --dry-run=client -o yaml | kubectl apply -f -
 rm tls.crt tls.key
 
-echo "==> Installation de GitLab via Helm..."
+echo "==> Installing GitLab via Helm..."
 helm repo add gitlab "$CHART_REPO" || true
 helm repo update
 helm upgrade --install "$RELEASE_NAME" gitlab/gitlab \

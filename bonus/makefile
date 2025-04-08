@@ -16,78 +16,78 @@ URL_ARGOCD = https://argocd.local/
 URL_GITLAB = https://gitlab.local/
 
 help:
-	@echo "Commandes disponibles :"
-	@echo "  make help          : Affiche cette aide."
-	@echo "  make requirements  : Exécute le script requirements.sh pour installer les dépendances nécessaires."
-	@echo "  make k3d           : Crée un cluster k3d si celui-ci n'existe pas déjà et crée les namespaces."
-	@echo "  make add_to_hosts : Ajoute l'URL d'Argo CD et de l'application dev au fichier hosts."
-	@echo "  make argocd        : Installe Argo CD sur le cluster k3d."
-	@echo "  make dev          : Créer le certificat pour l'application dev et déploi l'application."
-	@echo "  make gitlab        : Installe Gitlab sur le cluster k3d."
-	@echo "  make ingress      : Déploie les ingress pour l'application dev et Argo CD."
-	@echo "  make show_id       : Affiche les identifiants pour se connecter à l'interface web d'Argo CD."
-	@echo "  make all           : Exécute toutes les étapes dans l'ordre : requirements, k3d, argocd, open_port, et show_id."
+	@echo "Available commands:"
+	@echo "  make help          : Display this help."
+	@echo "  make requirements  : Run requirements.sh script to install necessary dependencies."
+	@echo "  make k3d           : Create a k3d cluster if it doesn't already exist and create namespaces."
+	@echo "  make add_to_hosts  : Add Argo CD URL and dev application to hosts file."
+	@echo "  make argocd        : Install Argo CD on the k3d cluster."
+	@echo "  make dev           : Create certificate for dev application and deploy the application."
+	@echo "  make gitlab        : Install Gitlab on the k3d cluster."
+	@echo "  make ingress       : Deploy ingresses for dev application and Argo CD."
+	@echo "  make show_id       : Display credentials to connect to Argo CD web interface."
+	@echo "  make all           : Execute all steps in order: requirements, k3d, argocd, open_port, and show_id."
 
 requirements:
-	@echo "Lancement de requirements.sh..."
+	@echo "Running requirements.sh..."
 	@bash $(REQUIREMENTS_FILE_PATH)
 
 k3d:
-	@echo "Lancement de create_cluster.sh..."
+	@echo "Running create_cluster.sh..."
 	@bash $(CREATE_CLUSTER_PATH)
-	@echo "Création des namespaces sur le cluster k3d.."
+	@echo "Creating namespaces on k3d cluster..."
 	@kubectl apply -f $(ARGOCD_CONFS_PATH)/namespace.yaml
 	@kubectl apply -f $(DEV_CONFS_PATH)/namespace.yaml
 	@kubectl apply -f $(GITLAB_CONFS_PATH)/namespace.yaml
-	@echo "Attente de l'initialisation du cluster k3d..."
+	@echo "Waiting for k3d cluster initialization..."
 	@kubectl wait --for=condition=Ready nodes --all --timeout=60s
 
 add_to_hosts:
-	@echo "Lancement de add_to_hosts.sh..."
+	@echo "Running add_to_hosts.sh..."
 	@bash $(ADD_TO_HOSTS_PATH)
 
 argocd:
-	@echo "Lancement de deploy_argocd.sh..."
+	@echo "Running deploy_argocd.sh..."
 	@bash $(DEPLOY_ARGOCD_PATH)
-	@echo "Attente que le service 'argocd-server' soit prêt..."
+	@echo "Waiting for 'argocd-server' service to be ready..."
 	@kubectl rollout status deployment argocd-server -n $(ARGOCD_NAMESPACE) --timeout=120s
 
 dev:
-	@echo "Lancement de create_cert_dev.sh..."
+	@echo "Running create_cert_dev.sh..."
 	@bash $(CREATE_CERT_DEV_PATH)
-	@echo "Déploiement de l'application dev..."
+	@echo "Deploying dev application..."
 	@kubectl apply -f $(ARGOCD_CONFS_PATH)/argocd_app.yaml
 
 gitlab:
-	@echo "Lancement de deploy_gitlab.sh..."
+	@echo "Running deploy_gitlab.sh..."
 	@bash $(DEPLOY_GITLAB_PATH)
-	@echo "Attente que le service 'gitlab' soit prêt..."
+	@echo "Waiting for 'gitlab' service to be ready..."
 
 ingress:
-	@echo "Déploiement des ingress..."
+	@echo "Deploying ingresses..."
 	@kubectl apply -f $(DEV_CONFS_PATH)/ingress.yaml
 	@kubectl apply -f $(ARGOCD_CONFS_PATH)/ingress.yaml
 	kubectl apply -f "${GITLAB_CONFS_PATH}/ingress.yaml"
 
 show_id:
 	@echo ""
-	@echo "Identifiants Argo CD Web"
+	@echo "Argo CD Web Credentials"
 	@echo "URL      : $(URL_ARGOCD)"
-	@echo "Utilisateur : admin"
+	@echo "Username : admin"
 	kubectl -n argocd get secret argocd-initial-admin-secret \
 		-o jsonpath="{.data.password}" | base64 -d; echo
 	@echo ""
-	@echo "L'interface Argo CD est accessible !"
-	@echo "Identifiants Gitlab Web"
+	@echo "Argo CD interface is accessible!"
+	@echo "Gitlab Web Credentials"
 	@echo "URL      : $(URL_GITLAB)"
-	@echo "Utilisateur : root"
+	@echo "Username : root"
 	kubectl -n gitlab get secret gitlab-gitlab-initial-root-password \
 		-o jsonpath="{.data.password}" | base64 -d; echo
 	@echo ""
-	@echo "L'interface Gitlab est accessible !"
+	@echo "Gitlab interface is accessible!"
 
 clean: 
-	@echo "lancement de clean_cluster.sh..."
+	@echo "Running clean_cluster.sh..."
 	@bash $(CLEAN_CLUSTER_PATH)
 
 all: requirements k3d add_to_hosts argocd gitlab dev ingress show_id
@@ -95,6 +95,6 @@ all: requirements k3d add_to_hosts argocd gitlab dev ingress show_id
 re:
 	@make clean
 	@make all
-	@echo "Reconstruction terminée !"
+	@echo "Rebuild complete!"
 
 .PHONY: requirements,k3d, add_to_hosts, argocd, dev, gitlab, ingress, show_id, clean, help, all, re

@@ -1,4 +1,3 @@
-
 #!/bin/bash
 set -euo pipefail
 
@@ -9,8 +8,8 @@ TRAEFIK_CONFS_PATH="../confs/traefik/"
 
 
 if k3d cluster list | grep -q "$CLUSTER_NAME"; then
-    echo "Le cluster $CLUSTER_NAME existe déjà."
+    echo "Cluster $CLUSTER_NAME already exists."
 else
-    echo "Création du cluster $CLUSTER_NAME..."
+    echo "Creating cluster $CLUSTER_NAME..."
     k3d cluster create "$CLUSTER_NAME" --port "443:443@loadbalancer"
 fi

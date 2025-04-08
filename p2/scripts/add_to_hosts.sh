@@ -6,9 +6,9 @@ HOSTS_FILE="/etc/hosts"
 
 for domain in "${DOMAINS[@]}"; do
     if ! grep -qE "\s$domain(\s|$)" "$HOSTS_FILE"; then
-        echo "Ajout de $domain au fichier hosts"
+        echo "Adding $domain to hosts file"
         echo "$IP    $domain" | sudo tee -a "$HOSTS_FILE" > /dev/null
     else
-        echo "$domain est déjà présent dans le fichier hosts"
+        echo "$domain is already present in the hosts file"
     fi
 done

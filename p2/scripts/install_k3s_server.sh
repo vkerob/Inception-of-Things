@@ -3,19 +3,19 @@
 CONFIG_SRC="/vagrant/confs/config-server.yaml"
 CONFIG_DST="/etc/rancher/k3s/config.yaml"
 
-echo "Installation de K3s en mode contrôleur sur jvasseurS..."
+echo "Installing K3s in controller mode on jvasseurS..."
 
-# Vérifier si le fichier de configuration existe dans /vagrant/confs
+# Check if configuration file exists in /vagrant/confs
 if [ ! -f "$CONFIG_SRC" ]; then
-    echo "Erreur : Le fichier de configuration $CONFIG_SRC n'a pas été trouvé."
+    echo "Error: Configuration file $CONFIG_SRC not found."
     exit 1
 fi
 
-# Création du répertoire de configuration s'il n'existe pas
+# Create configuration directory if it doesn't exist
 sudo mkdir -p /etc/rancher/k3s
 
-# Copie et renommage du fichier de configuration
-echo "Copie de la configuration du serveur K3s..."
+# Copy and rename configuration file
+echo "Copying K3s server configuration..."
 sudo cp "$CONFIG_SRC" "$CONFIG_DST"
 sudo chmod 644 "$CONFIG_DST"
 

@@ -4,18 +4,18 @@ set -euo pipefail
 
 KUBECTL_VERSION="v1.32.0"
 
-echo "Script d'installation de l'environnement K3D + outils"
+echo "K3D environment + tools installation script"
 
-# === Fonctions de vérification ===
+# === Check functions ===
 function is_installed() {
     command -v "$1" >/dev/null 2>&1
 }
 
 # === Docker ===
 if is_installed docker; then
-    echo "Docker est déjà installé"
+    echo "Docker is already installed"
  else 
-    echo "Installation de Docker..."
+    echo "Installing Docker..."
 
     sudo apt update
     sudo apt install -y ca-certificates curl gnupg lsb-release apt-transport-https
@@ -32,33 +32,33 @@ if is_installed docker; then
     sudo apt update
     sudo apt install -y docker-ce docker-ce-cli containerd.io
 
-    echo "Ajout de $USER au groupe docker"
+    echo "Adding $USER to docker group"
     sudo usermod -aG docker $USER
 fi
 
 # === k3d ===
 if is_installed k3d; then
-    echo "k3d est déjà installé"
+    echo "k3d is already installed"
 else
-    echo "Installation de k3d..."
+    echo "Installing k3d..."
     curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 fi
 
 # === kubectl ===
 if ! is_installed kubectl; then
-    echo "Installation de kubectl..."
+    echo "Installing kubectl..."
 
     KUBECTL_VERKUBECTL_VERSION=$(curl -sL https://dl.k8s.io/release/stable.txt)
 
     if [[ -z "$KUBECTL_VERSION" ]]; then
-        echo "Impossible de récupérer la dernière version de kubectl, utilisation d'une version par défaut"
+        echo "Unable to get latest kubectl version, using default version"
     fi
 
-    echo "Téléchargement de kubectl version : $KUBECTL_VERSION"
+    echo "Downloading kubectl version: $KUBECTL_VERSION"
 
     curl -LO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
     chmod +x kubectl
     sudo mv kubectl /usr/local/bin/
 else
-    echo "kubectl est déjà installé"
+    echo "kubectl is already installed"
 fi
