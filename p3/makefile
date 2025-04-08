@@ -73,7 +73,7 @@ clean:
 	@echo "Running clean_cluster.sh..."
 	@bash $(CLEAN_CLUSTER_PATH)
 
-all: requirements k3d add_to_hosts argocd dev ingress show_id help
+all: requirements k3d add_to_hosts argocd dev ingress show_id
 
 re:
 	@make clean

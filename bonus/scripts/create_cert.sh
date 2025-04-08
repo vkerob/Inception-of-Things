@@ -21,7 +21,7 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
   -keyout tls.key -out tls.crt -subj "/CN=gitlab.local/O=GitLab" >/dev/null 2>&1
 kubectl create secret tls gitlab-tls \
   --cert=tls.crt --key=tls.key \
-  -n "$GITLAB_NS" --dry-run=client -o yaml | kubectl apply -f -
+  -n "$GITLAB_NAMESPACE" --dry-run=client -o yaml | kubectl apply -f -
 rm tls.crt tls.key
 
 

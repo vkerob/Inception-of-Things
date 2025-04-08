@@ -8,7 +8,7 @@ GITLAB_NEW_REPO_URL="$GITLAB_URL/root/$GITLAB_REPO_NAME.git"
 GITHUB_REPO_ORIGIN_URL="https://github.com/$GITHUB_USERNAME/$GITLAB_REPO_NAME"
 CURRENT_DIR=$(pwd)
 
-set -x
+set -euo pipefail
 
 get_gitlab_access_token() {
     echo "[INFO] Getting GitLab access token..." >&2

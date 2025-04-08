@@ -40,3 +40,4 @@ grafana:
 
 kas:
   install: false
+

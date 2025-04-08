@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
 GITLAB_NS="gitlab"
 CHART_REPO="https://charts.gitlab.io/"

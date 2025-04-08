@@ -51,7 +51,6 @@ add_to_hosts:
 create_cert:
 	@echo "Lancement de create_cert.sh..."
 	@bash $(CREATE_CERT_PATH)
-	@echo "Création du certificat pour l'application dev..."
 
 argocd:
 	@echo "Running deploy_argocd.sh..."
@@ -72,7 +71,7 @@ gitlab:
 	@echo "Running deploy_gitlab.sh..."
 	@bash $(DEPLOY_GITLAB_PATH)
 	@echo "Waiting for 'gitlab' service to be ready..."
-	@kubectl rollout status deployment gitlab-webservice-default -n $(GITLAB_NAMESPACE) --timeout=500s
+	@kubectl rollout status deployment gitlab-webservice-default -n $(GITLAB_NAMESPACE) --timeout=600s
 
 ingress:
 	@echo "Deploying ingresses..."
@@ -103,7 +102,7 @@ clean:
 	@echo "Running clean_cluster.sh..."
 	@bash $(CLEAN_CLUSTER_PATH)
 
-all: requirements k3d add_to_hosts argocd gitlab dev_app dev ingress show_id
+all: requirements k3d add_to_hosts create_cert argocd gitlab dev_app dev ingress show_id
 
 re:
 	@make clean
