@@ -12,9 +12,10 @@ set -x
 
 get_gitlab_access_token() {
     echo "[INFO] Getting GitLab access token..." >&2
+    password="$(kubectl get secret -n gitlab gitlab-gitlab-initial-root-password -o jsonpath='{.data.password}' | base64 --decode)"
     curl_response=$(curl -k --silent --show-error --request POST \
         --form "grant_type=password" --form "username=root" \
-        --form "password=0hUehDKTPnP7BJMDDUaS5tu8dQPwRu1J2iWreXKhNjsAUZw7iFsd3v3IrdJhFLrm" \
+        --form "password=$password" \
         "$GITLAB_URL/oauth/token")
 
     if [[ -z "$curl_response" ]]; then

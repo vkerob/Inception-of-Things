@@ -62,7 +62,8 @@ show_id:
 	@echo "Argo CD Web Credentials"
 	@echo "URL      : $(URL_ARGOCD)"
 	@echo "Username : admin"
-	kubectl -n argocd get secret argocd-initial-admin-secret \
+	@echo -n "Password :"
+	@kubectl -n argocd get secret argocd-initial-admin-secret \
 		-o jsonpath="{.data.password}" | base64 -d; echo
 	@echo ""
 	@echo "Argo CD interface is accessible!"

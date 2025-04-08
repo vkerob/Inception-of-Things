@@ -3,10 +3,6 @@ global:
     domain: gitlab.local
     gitlab:
       name: gitlab.local
-  appConfig:
-    externalUrl: https://gitlab.local
-
-
   ingress:
     enabled: false
   certmanager:
@@ -15,8 +11,13 @@ global:
     enabled: false
   kas:
     enabled: false
-  exporter:
+  prometheus:
     enabled: false
+  grafana:
+    enabled: false
+
+exporter:
+  enabled: false
 
 nginx-ingress:
   enabled: false
@@ -24,18 +25,18 @@ nginx-ingress:
 certmanager:
   install: false
 
+certmanager-issuer:
+  install: false
+  email: dev@fake.local
+
 gitlab-runner:
   install: false
 
 prometheus:
   install: false
 
-certmanager-issuer:
-  enabled: false
-  email: dev@fake.local
+grafana:
+  install: false
 
-gitlab:
-  grafana:
-    enabled: false
-  kas:
-    enabled: false
+kas:
+  install: false
