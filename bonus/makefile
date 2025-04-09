@@ -60,7 +60,7 @@ argocd:
 
 dev_app:
 	@echo "Creating repository for dev application..."
-	@bash $(DEPLOY_REPO_GITLAB_PATH)
+	-@bash $(DEPLOY_REPO_GITLAB_PATH)
 
 dev:
 	@echo "Running create_cert_dev.sh..."
@@ -102,11 +102,11 @@ clean:
 	@echo "Running clean_cluster.sh..."
 	@bash $(CLEAN_CLUSTER_PATH)
 
-all: requirements k3d add_to_hosts create_cert argocd gitlab dev_app dev ingress show_id
+all: requirements k3d add_to_hosts create_cert ingress argocd gitlab dev_app dev show_id
 
 re:
 	@make clean
 	@make all
 	@echo "Rebuild complete!"
 
-.PHONY: requirements, k3d, add_to_hosts, create_cert, argocd, dev, gitlab, ingress, show_id, clean, help, all, re
+.PHONY: requirements, k3d, add_to_hosts, create_cert, ingress, argocd, dev, gitlab, show_id, clean, help, all, re

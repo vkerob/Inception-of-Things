@@ -13,7 +13,6 @@ set -euo pipefail
 get_gitlab_access_token() {
     echo "[INFO] Getting GitLab access token..." >&2
     password="$(kubectl get secret -n gitlab gitlab-gitlab-initial-root-password -o jsonpath='{.data.password}' | base64 --decode)"
-    echo "$password" >&2
     curl_response=$(curl -k --silent --show-error --request POST \
         --form "grant_type=password" --form "username=root" \
         --form "password=$password" \
@@ -95,13 +94,12 @@ git config --global http.sslVerify false
 
 echo "[INFO] Push du contenu vers GitLab..."
 if ! git push gitlab --all; then
-    echo "[ERROR] Push to GitLab failed."
-    exit 1
+    echo "[ERROR] Push to GitLab failed. Continuing execution..."
 fi
 
 if ! git push gitlab --tags; then
-    echo "[ERROR] Push tags to GitLab failed."
-    exit 1
+    echo "[ERROR] Push tags to GitLab failed. Continuing execution..."
 fi
 
-echo "[SUCCESS] Content pushed successfully to GitLab."
+echo "[SUCCESS] Script completed."
+exit 0
